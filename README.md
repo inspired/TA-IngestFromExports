@@ -2,6 +2,7 @@
 https://github.com/Exporttool/exporttool
 
 Author: Mikael Bjerkeland, Splunk
+
 Inspired by: https://github.com/silkyrich/ingest_eval_examples/
 
 ## Usage
