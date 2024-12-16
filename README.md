@@ -9,7 +9,7 @@ Inspired by: https://github.com/silkyrich/ingest_eval_examples/
 1. Create your index
 2. Monitor, one-shot or upload your CSV file. Set sourcetype to *splunk_exporttool* (it will be rewritten)
 ```
-[monitor:///data/exports/windows]
+[monitor:///data/exports/windows/*]
 sourcetype = splunk_exporttool
 ```
 3. Profit
