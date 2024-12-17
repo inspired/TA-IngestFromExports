@@ -17,9 +17,8 @@ The props/transforms in this TA will rewrite the headers so that the event data,
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | 1733946871 | "XmlWinEventLog:Application" | "some.host.example.com" | "XmlWinEventLog" | "Event content, may be multi-line" |
 
-The _meta is dropped and the other indexed fields are corrected.  
-Splunkbase TAs will work on the destination system just as they did on the source system.
-
+The _meta is dropped and the other indexed fields are kept, with values fixed.  
+Splunkbase TAs will parse your data on the destination system just as they did on the source system.
 
 ## Usage
 
