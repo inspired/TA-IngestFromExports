@@ -3,7 +3,7 @@ https://github.com/Exporttool/exporttool
 
 Author: Mikael Bjerkeland, Splunk
 
-Inspired by: https://github.com/silkyrich/ingest_eval_examples/
+Inspired by: https://github.com/silkyrich/ingest_eval_examples/ and https://community.splunk.com/t5/Getting-Data-In/How-to-get-the-host-value-from-INDEXED-EXTRACTIONS-json/m-p/577392
 
 ## Introduction
 Exporttool creates CSV files with the following content:
