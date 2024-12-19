@@ -6,8 +6,8 @@ Author: Mikael Bjerkeland, Splunk
 Inspired by: https://github.com/silkyrich/ingest_eval_examples/ and https://community.splunk.com/t5/Getting-Data-In/How-to-get-the-host-value-from-INDEXED-EXTRACTIONS-json/m-p/577392
 
 ## Introduction
-Exporttool creates CSV files with the following content:
-| "_time" | source | host | sourcetype | "_raw" | "_meta" |
+Exporttool creates CSV files in the following format:
+| _time | source | host | sourcetype | _raw | _meta |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | 1733946871 | "source::XmlWinEventLog:Application" | "host::some.host.example.com" | "sourcetype::XmlWinEventLog" | "Event content, may be multi-line" | "_indextime::1734086604 punct::<_='://../////'><><_='___'/><_=''></><></><></><><" |
 
