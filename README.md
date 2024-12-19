@@ -1,4 +1,4 @@
-# Tool to properly ingest CSVs produced by exporttool
+# Add-on to correctly ingest CSVs produced by exporttool
 https://github.com/Exporttool/exporttool
 
 Author: Mikael Bjerkeland, Splunk
