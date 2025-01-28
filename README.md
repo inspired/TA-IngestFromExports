@@ -56,3 +56,14 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
 
 
 ## Use case 3: Ingest from Splunk JSON Export
+
+### Introduction
+
+Export your Splunk search results as JSON by clicking *Export Results*, Format: *JSON*
+
+### Usage
+
+1. Install this TA on your indexer/HF
+2. Create your indexes
+3. Monitor, one-shot or upload your CSV file. Set sourcetype to *index_splunk_json_export* (it will be rewritten)
+
