@@ -52,7 +52,10 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
 1. Install this TA on your indexer/HF (source/intermediary system)
 2. Install this TA on your (target system)
 3. Move data from source system to target system whatever means you choose
-4. Monitor, one-shot or upload files. Set sourcetype to *rfs_input* (it will be rewritten)
+4. Monitor, one-shot or upload files. Set sourcetype to ONE of the following:
+   1. *rfs_input* (it will be rewritten) and set your desired index
+   2. *rfs_input_with_index* (it will be rewritten) if you'd like to retain the original index.
+
 
 
 ## Use case 3: Ingest from Splunk JSON Export
@@ -65,5 +68,7 @@ Export your Splunk search results as JSON by clicking *Export Results*, Format: 
 
 1. Install this TA on your indexer/HF
 2. Create your indexes
-3. Monitor, one-shot or upload your CSV file. Set sourcetype to *index_splunk_json_export* (it will be rewritten)
+3. Monitor, one-shot or upload your CSV file. Set sourcetype to ONE of the following:
+   1. *index_splunk_json_export* (it will be rewritten) and set your desired index
+   2. *index_splunk_json_export_with_index* (it will be rewritten) if you'd like to retain the original index.
 
