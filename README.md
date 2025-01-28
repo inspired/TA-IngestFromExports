@@ -4,9 +4,10 @@ Author: Mikael Bjerkeland, Splunk
 
 Inspired by: https://github.com/silkyrich/ingest_eval_examples/ and https://community.splunk.com/t5/Getting-Data-In/How-to-get-the-host-value-from-INDEXED-EXTRACTIONS-json/m-p/577392
 
-This TA has 2 use cases:
+This TA has 3 use cases:
 * Ingest from Exporttool CSV output
 * Ingest from Ingest Actions Filesystem (RFS) Output
+* Ingest from Splunk GUI export JSON output
 
 ## Use case 1: Ingest from Exporttool CSV output
 https://github.com/Exporttool/exporttool
@@ -53,3 +54,5 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
 3. Move data from source system to target system whatever means you choose
 4. Monitor, one-shot or upload files. Set sourcetype to *rfs_input* (it will be rewritten)
 
+
+## Use case 3: Ingest from Splunk JSON Export
