@@ -174,6 +174,7 @@ Whereas we only want the following fields:
 * host
 * sourcetype
 * source
+* index
 * _time
 
 ### Usage
