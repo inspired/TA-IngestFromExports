@@ -61,8 +61,120 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
 ## Use case 3: Ingest from Splunk JSON Export
 
 ### Introduction
-
 Export your Splunk search results as JSON by clicking *Export Results*, Format: *JSON*
+Search results have the following format (JSON prettified):
+
+```
+{
+    "preview": false,
+    "result": {
+        "APTransactionID": "0",
+        "AckedDateTime": "NULL",
+        "AckedFlag": "0",
+        "AckedTimeZoneCode": "NULL",
+        "AckedUserName": "NULL",
+        "AlarmColour": "255",
+        "AlarmEventType": "0",
+        "AlarmInstructionText": "NULL",
+        "AlarmPriority": "30",
+        "CardID": "953121",
+        "CardNumber": "-128128128",
+        "ChainID": "12",
+        "ClearTimeZoneCode": "NULL",
+        "ClearedAtMachine": "NULL",
+        "ClearedDateTime": "NULL",
+        "ClearedFlag": "0",
+        "ClearedUserName": "NULL",
+        "CommentFlag": "0",
+        "CompanyID": "1",
+        "CompanyName": "ACME",
+        "CustomerCodeNumber": "1000",
+        "DateTimeOfLastRepeat": "NULL",
+        "DateTimeOfProcessing": "2025-01-28 11:23:42.0",
+        "DateTimeOfReception": "2025-01-28 11:23:42.0",
+        "DateTimeOfTxn": "2025-01-28 11:23:42.0",
+        "DeviceID": "38",
+        "DeviceNumber": "0",
+        "DeviceType": "82",
+        "DoorControlUnitID": "1",
+        "DriverID": "0",
+        "EmployeeNumber": "890005",
+        "FirstName": "Ola",
+        "HasVideo": "0",
+        "LastName": "Nordmann",
+        "MachineDateTime": "2025-01-28 11:23:42.0",
+        "MachineID": "0",
+        "MachinePort": "0",
+        "NodeAddress": "01",
+        "NumberRepeats": "0",
+        "PatrolTourID": "0",
+        "RegionID": "NULL",
+        "ResetDateTime": "NULL",
+        "ResetFlag": "0",
+        "ResponseMnemonic": "17238",
+        "SubDeviceID": "0",
+        "SubDeviceType": "0",
+        "TimeAfter": "0",
+        "TimeBefore": "0",
+        "TxnConditionName": "Granted Access",
+        "TxnID": "12314124",
+        "VisitorCard": "0",
+        "WhereName": "1-1-5000",
+        "_raw": "\"2025-01-28 11:23:42\" TxnID=\"12314124\", DeviceType=\"82\", ChainID=\"12\", NodeAddress=\"01\", DoorControlUnitID=\"1\", DeviceNumber=\"0\", AlarmEventType=\"0\", DeviceID=\"38\", NumberRepeats=\"0\", DateTimeOfTxn=\"2025-01-28 11:23:42.0\", DateTimeOfLastRepeat=\"NULL\", DateTimeOfReception=\"2025-01-28 11:23:42.0\", DateTimeOfProcessing=\"2025-01-28 11:23:42.0\", CompanyID=\"1\", CompanyName=\"ACME\", WhereName=\"1-1-5000\", PatrolTourID=\"0\", ResponseMnemonic=\"17238\", TxnConditionName=\"Granted Access\", AlarmPriority=\"30\", AlarmColour=\"255\", AlarmInstructionText=\"NULL\", CustomerCodeNumber=\"1000\", CardNumber=\"-128128128\", FirstName=\"Ola\", LastName=\"Nordmann\", AckedFlag=\"0\", AckedUserName=\"NULL\", AckedDateTime=\"NULL\", ResetFlag=\"0\", ResetDateTime=\"NULL\", ClearedFlag=\"0\", ClearedUserName=\"NULL\", ClearedDateTime=\"NULL\", ClearedAtMachine=\"NULL\", CommentFlag=\"0\", MachineID=\"0\", MachinePort=\"0\", TimeBefore=\"0\", TimeAfter=\"0\", MachineDateTime=\"2025-01-28 11:23:42.0\", EmployeeNumber=\"890005\", VisitorCard=\"0\", AckedTimeZoneCode=\"NULL\", ClearTimeZoneCode=\"NULL\", RegionID=\"NULL\", APTransactionID=\"0\", SubDeviceType=\"0\", SubDeviceID=\"0\", DriverID=\"0\", CardID=\"953121\", HasVideo=\"0\"\n",
+        "_time": "2025-01-28T12:23:42.000+0100",
+        "action": "success",
+        "app": "Stanley:AC",
+        "date_hour": "11",
+        "date_mday": "28",
+        "date_minute": "23",
+        "date_month": "january",
+        "date_second": "42",
+        "date_wday": "tuesday",
+        "date_year": "2025",
+        "date_zone": "local",
+        "dest": "Door_1-1-5000",
+        "eventtype": "stanley-access_control",
+        "host": "127.0.0.1",
+        "index": "main",
+        "linecount": "2",
+        "product": "Access Control",
+        "punct": "\"--_::\"_=\"\",_=\"\",_=\"\",_=\"\",_=\"\",_=\"\",_=\"\",_=\"\",_=\"",
+        "source": "samplelog.access-log",
+        "sourcetype": "access-log",
+        "splunk_server": "ip-172-31-24-46.ec2.internal",
+        "splunk_server_group": [
+            "dmc_group_indexer",
+            "dmc_group_kv_store",
+            "dmc_group_license_master",
+            "dmc_group_search_head"
+        ],
+        "src": "Door_1-1-5000",
+        "src_nt_domain": "ACME",
+        "tag": [
+            "authentication",
+            "physical",
+            "success"
+        ],
+        "tag::action": "success",
+        "tag::eventtype": [
+            "authentication",
+            "physical"
+        ],
+        "timeendpos": "20",
+        "timestartpos": "1",
+        "user": "890005",
+        "vendor": "Stanley",
+        "vendor_action": "17238",
+        "vendor_product": "Stanley Access Control"
+    }
+}
+```
+Whereas we only want the following fields:
+* _raw
+* host
+* sourcetype
+* source
+* _time
 
 ### Usage
 
