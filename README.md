@@ -69,7 +69,7 @@ whitelist = \.ndjson(\.(zstd|zst|lz4|gzip))?$
   
 #### <a name="move_files"></a> File move script
 A convenience script to move files from one system to another using rsync+ssh is attached. The script also cleans up old files.  
-The script is located in *bin/move_files.sh* and unit files to execute it every 30 seconds are in the readme folder.
+The script is located in *bin/move_files.sh* and the unit files to execute it every 30 seconds are in the readme folder.
 
 ### Monitoring
 If you are moving data across a network using the script bin/move_files.sh you can use the following to monitor latency and which files have been successfully read.  
