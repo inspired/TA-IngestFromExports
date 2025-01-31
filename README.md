@@ -31,14 +31,13 @@ Splunkbase TAs will parse your data on the destination system just as they did o
 
 1. Install this TA on your indexer/HF
 2. Create your indexes
-3. Monitor, one-shot or upload your CSV file. Set sourcetype to *splunk_exporttool* (it will be rewritten)
-
+3. Monitor, one-shot or upload your CSV file. Set sourcetype to *splunk_exporttool* (it will be rewritten)  
    I.e.:
-```
-[monitor:///data/exports/windows/*]
-sourcetype = splunk_exporttool
-index = windows
-```
+   ```
+   [monitor:///data/exports/windows/*]
+   sourcetype = splunk_exporttool
+   index = windows
+   ```
 4. Profit
 
 ## Use case 2: Ingest from Ingest Actions Filesystem (RFS) Output
@@ -78,18 +77,20 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
             ```
 3. Install this TA on your (target system)
 4. Move data from source system to target system using whatever means you choose. The attached [File move script](#move_files) can be used.
-5. Monitor, batch or upload files. Set sourcetype to ONE of the following:
+5. Monitor, batch or upload files. Example batch config:
+   ```
+   [batch:///data/imports]
+   move_policy = sinkhole
+   disabled = false
+   host = high-hf.localdomain
+   sourcetype = rfs_input_with_index
+   crcSalt = <SOURCE>
+   whitelist = \.ndjson(\.(zstd|zst|lz4|gzip))?$
+   ```
+6. Set sourcetype to ONE of the following:
    1. *rfs_input* (it will be rewritten) and set your desired index
    2. *rfs_input_with_index* (it will be rewritten) if you'd like to retain the original index.
-  ```
-[batch:///data/imports]
-move_policy = sinkhole
-disabled = false
-host = high-hf.localdomain
-sourcetype = rfs_input_with_index
-crcSalt = <SOURCE>
-whitelist = \.ndjson(\.(zstd|zst|lz4|gzip))?$
-```
+
   
 #### <a name="move_files"></a> File move script
 A convenience script to move files from one system to another using rsync+ssh is attached. The script also cleans up old files.  
