@@ -102,12 +102,12 @@ Modify the paths and the replace function to match your setup.
 
 #### SPL
 ```
-earliest=-10m@m latest=-5m@m (index=main sourcetype=journald source="journald://SplunkCopyFiles" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished "/data/imports")
+(index=main sourcetype=journald source="journald://SplunkCopyFiles" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished events ndjson)
 | eval file=trim(file,"'")
-| eval file=replace(file,"//","/")
-| eval file=replace(file,"/splunk/", "/imports/")
+| rex field=file "sourcetype=(?<original_sourcetype>\S+)/"
+| eval file=replace(file,"^.*/events_","events_")
 | eval file=replace(file,"(_\d+\.ndjson)",".ndjson")
-| stats values(sourcetype) dc(sourcetype) AS dc_st range(_time) BY file
+| stats values(sourcetype) dc(sourcetype) AS dc_st range(_time) BY file original_sourcetype
 ```
 
 #### Journald input in inputs.conf
