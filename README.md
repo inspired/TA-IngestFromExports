@@ -52,9 +52,33 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
 
 #### Splunk Setup
 1. Install this TA on your indexer/HF (source/intermediary system)
-2. Install this TA on your (target system)
-3. Move data from source system to target system using whatever means you choose. The attached [File move script](#move_files) can be used.
-4. Monitor, batch or upload files. Set sourcetype to ONE of the following:
+    1. Configure outputs.conf with RFS Filesystem Output through the Ingest Actions GUI or with the following config file:
+       ```
+       [rfs:filesystem]
+       compression = none
+       dropEventsOnUploadError = false
+       format = ndjson
+       format.ndjson.index_time_fields = true
+       fs.appendToFileUntilSizeMB = 250
+       fs.timeBeforeClosingFileSecs = 30
+       partitionBy = day,sourcetype
+       path = file:///data/splunk
+       ```
+     2. Configure props.conf through the Ingest Actions GUI or with the following config files:
+         1. props.conf
+            ```
+            [default]
+            RULESET-Route_everyting_to_filesystem = _rule:Route_everyting_to_filesystem:route:eval:r2v8oeju
+            ```
+         2. transforms.conf
+            ```
+            [_rule:Route_everyting_to_filesystem:route:eval:r2v8oeju]
+            INGEST_EVAL = 'pd:_destinationKey'=if((true()), "rfs:filesystem,_splunk_", 'pd:_destinationKey')
+            STOP_PROCESSING_IF = NOT isnull('pd:_destinationKey') AND 'pd:_destinationKey' != "" AND (isnull('pd:_doRouteClone') OR 'pd:_doRouteClone' == "")
+            ```
+3. Install this TA on your (target system)
+4. Move data from source system to target system using whatever means you choose. The attached [File move script](#move_files) can be used.
+5. Monitor, batch or upload files. Set sourcetype to ONE of the following:
    1. *rfs_input* (it will be rewritten) and set your desired index
    2. *rfs_input_with_index* (it will be rewritten) if you'd like to retain the original index.
   ```
