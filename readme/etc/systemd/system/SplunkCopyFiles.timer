@@ -1,0 +1,9 @@
+[Unit]
+Description="Run SplunkCopyFiles every 30 seconds"
+
+[Timer]
+OnCalendar=*:*:00,30
+Unit=SplunkCopyFiles.service
+
+[Install]
+WantedBy=multi-user.target
