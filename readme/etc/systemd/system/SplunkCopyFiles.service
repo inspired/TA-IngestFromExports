@@ -1,0 +1,7 @@
+[Unit]
+Description="Move Splunk Filesystem Output"
+
+[Service]
+ExecStart=/home/splunk/move_files.sh
+User=splunk
+Group=splunk
