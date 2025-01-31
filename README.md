@@ -49,15 +49,31 @@ Essentially this allows you to index and clone, or route a subset of data on you
 Care has been taken to ensure that the integrity of the data is left intact, including metadata such as custom fields, allowing standard add-ons to parse the data on the target system.
 
 ### Usage
+
+#### Splunk Setup
 1. Install this TA on your indexer/HF (source/intermediary system)
 2. Install this TA on your (target system)
-3. Move data from source system to target system whatever means you choose
-4. Monitor, one-shot or upload files. Set sourcetype to ONE of the following:
+3. Move data from source system to target system using whatever means you choose. The attached [File move script](#move_files) can be used.
+4. Monitor, batch or upload files. Set sourcetype to ONE of the following:
    1. *rfs_input* (it will be rewritten) and set your desired index
    2. *rfs_input_with_index* (it will be rewritten) if you'd like to retain the original index.
+  ```
+[batch:///data/imports]
+move_policy = sinkhole
+disabled = false
+host = high-hf.localdomain
+sourcetype = rfs_input_with_index
+crcSalt = <SOURCE>
+whitelist = \.ndjson(\.(zstd|zst|lz4|gzip))?$
+```
+  
+#### <a name="move_files"></a> File move script
+A convenience script to move files from one system to another using rsync+ssh is attached. The script also cleans up old files.  
+The script is located in *bin/move_files.sh* and unit files to execute it every 30 seconds are in the readme folder.
 
 ### Monitoring
-If you are moving data across a network using the script bin/move_files.sh you can use the following to monitor latency and which files have been successfully read. Modify the paths and the replace function to match your setup.
+If you are moving data across a network using the script bin/move_files.sh you can use the following to monitor latency and which files have been successfully read.  
+Modify the paths and the replace function to match your setup.
 
 ```
 earliest=-10m@m latest=-5m@m (index=main sourcetype=journald source="journald://SplunkCopyFiles" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished "/data/imports")
