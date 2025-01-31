@@ -17,7 +17,7 @@ SSH_KEY=/home/splunk/.sshkey
 shopt -s globstar
 
 INPUT_DIR="${INPUT_DIR%/}/"
-ALLOWED_FILENAMES=(ndjson zstd gzip lz4)
+ALLOWED_EXTENSIONS=(ndjson zstd gzip lz4)
 
 
 for file in "${INPUT_DIR}"/**
@@ -25,7 +25,7 @@ do
         dirname=$(dirname ${file})
         filename=$(basename -- "$file")
         extension="${filename##*.}"
-        if [[ "$extension" == @(${ALLOWED_FILENAMES}) ]]; then
+        if [[ "$extension" == @(${ALLOWED_EXTENSIONS}) ]]; then
                 filename="${filename%.*}"
                 date=$(date +"%s")
                 filename_with_date=${filename}_${date}
