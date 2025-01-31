@@ -37,17 +37,20 @@ do
                 mtimesince=$((${date} - ${filemtime}))
                 echo MTIME: ${filemtime} and ${filesize}
                 # If the file is empty and old, we remove it.
-                if [ $filesize -eq 0 ] && [ $mtimesince -gt 300 ]; then
-                        echo Deleting ${file} because of age
-                        rm -f ${file}
+                if [ $filesize -eq 0 ]; then
+                        if [ $mtimesince -gt 300 ]; then
+                                echo Deleting ${file} because of age
+                                rm -f ${file}
+                        fi
+                else
+                        echo Creating ${dir_to_move_to} if required
+                        mkdir -p ${dir_to_move_to}
+                        echo Copying ${file} to ${file_to_staging}
+                        # At this point there is a theoretical chance of data loss. We need to monitor this.
+                        cp ${file} ${file_to_staging} && truncate -s 0 ${file}
                 fi
-                echo Creating ${dir_to_move_to} if required
-                mkdir -p ${dir_to_move_to}
-                echo Copying ${file} to ${file_to_staging}
-                # At this point there is a theoretical chance of data loss. We need to monitor this.
-                cp ${file} ${file_to_staging} && truncate -s 0 ${file}
         fi
 done
 
 # Copy files and delete local staging
-rsync -r --perms --chown=${REMOTE_DEST_USER}:${REMOTE_DEST_GROUP} --chmod=775 -e "ssh -i ${SSH_KEY}" ${STAGING_DIR}/* ${REMOTE_DEST_USER}@${REMOTE_DEST}:${REMOTE_DEST_DIR} && rm -rf ${STAGING_DIR}/*
+rsync -z -r -t --perms --chown=${REMOTE_DEST_USER}:${REMOTE_DEST_GROUP} --chmod=775 -e "ssh -o ConnectTimeout=10 -o ConnectionAttempts=1 -i ${SSH_KEY}" ${STAGING_DIR}/* ${REMOTE_DEST_USER}@${REMOTE_DEST}:${REMOTE_DEST_DIR} && rm -rf ${STAGING_DIR}/*
