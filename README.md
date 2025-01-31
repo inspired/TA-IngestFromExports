@@ -97,9 +97,10 @@ A convenience script to move files from one system to another using rsync+ssh is
 The script is located in *bin/move_files.sh* and the unit files to execute it every 30 seconds are in the readme folder.
 
 ### Monitoring
-If you are moving data across a network using the script bin/move_files.sh you can use the following to monitor latency and which files have been successfully read.  
+If you are moving data across a network using the script bin/move_files.sh you can use the following SPL monitor latency and which files have been successfully read.  
 Modify the paths and the replace function to match your setup.
 
+#### SPL
 ```
 earliest=-10m@m latest=-5m@m (index=main sourcetype=journald source="journald://SplunkCopyFiles" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished "/data/imports")
 | eval file=trim(file,"'")
@@ -108,6 +109,14 @@ earliest=-10m@m latest=-5m@m (index=main sourcetype=journald source="journald://
 | eval file=replace(file,"(_\d+\.ndjson)",".ndjson")
 | stats values(sourcetype) dc(sourcetype) AS dc_st range(_time) BY file
 ```
+
+#### Journald input in inputs.conf
+```
+[journald://SplunkCopyFiles]
+journalctl-filter = _SYSTEMD_UNIT=SplunkCopyFiles.service
+index = main
+```
+
 
 ## Use case 3: Ingest from Splunk JSON Export
 
