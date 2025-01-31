@@ -30,7 +30,6 @@ do
                 date=$(date +"%s")
                 filename_with_date=${filename}_${date}
                 dir_to_move_to=${STAGING_DIR}/${dirname#$INPUT_DIR}
-                #file_to_staging=${STAGING_DIR}/${filename_with_date}.${extension}
                 file_to_staging=${dir_to_move_to}/${filename_with_date}.${extension}
                 filemtime=$(stat -c %Y ${file})
                 filesize=$(stat --printf="%s" ${file})
