@@ -34,22 +34,20 @@ do
                 filemtime=$(stat -c %Y ${file})
                 filesize=$(stat --printf="%s" ${file})
                 mtimesince=$((${date} - ${filemtime}))
-                echo MTIME: ${filemtime} and ${filesize}
+                echo ${date} action=\"info\" file=\""${file}"\" modtime=${filemtime} size=${filesize}
                 # If the file is empty and old, we remove it.
                 if [ $filesize -eq 0 ]; then
                         if [ $mtimesince -gt 300 ]; then
-                                echo Deleting ${file} because of age
+                                echo ${date} action=\"delete\" file=\""${file}"\" reason=\"age\"
                                 rm -f ${file}
                         fi
                 else
-                        echo Creating ${dir_to_move_to} if required
-                        mkdir -p ${dir_to_move_to}
-                        echo Copying ${file} to ${file_to_staging}
+                        mkdir -p ${dir_to_move_to} && echo ${date} action=create dir="${dir_to_move_to}"
                         # At this point there is a theoretical chance of data loss. We need to monitor this.
-                        cp ${file} ${file_to_staging} && truncate -s 0 ${file}
+                        cp ${file} ${file_to_staging} && truncate -s 0 ${file} && echo ${date} action=\"copytruncate\" file=\""${file}"\" file_to=\""${file_to_staging}"\"
                 fi
         fi
 done
 
-# Copy files and delete local staging
-rsync -z -r -t --perms --chown=${REMOTE_DEST_USER}:${REMOTE_DEST_GROUP} --chmod=775 -e "ssh -o ConnectTimeout=10 -o ConnectionAttempts=1 -i ${SSH_KEY}" ${STAGING_DIR}/* ${REMOTE_DEST_USER}@${REMOTE_DEST}:${REMOTE_DEST_DIR} && rm -rf ${STAGING_DIR}/*
+# Copy files and delete local staging, ignore 0-byte files. They will be deleted within 300 seconds
+rsync --min-size=1 -z -r -t --perms --chown=${REMOTE_DEST_USER}:${REMOTE_DEST_GROUP} --chmod=775 -e "ssh -o ConnectTimeout=10 -o ConnectionAttempts=1 -i ${SSH_KEY}" ${STAGING_DIR}/* ${REMOTE_DEST_USER}@${REMOTE_DEST}:${REMOTE_DEST_DIR} && rm -rf ${STAGING_DIR}/* && echo $(date +"%s") action=\"move\" dir=\""${STAGING_DIR}"\" to=\""${REMOTE_DEST_USER}@${REMOTE_DEST}:${REMOTE_DEST_DIR}"\"
