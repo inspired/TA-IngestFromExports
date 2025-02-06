@@ -117,6 +117,9 @@ journalctl-filter = _SYSTEMD_UNIT=SplunkCopyFiles.service
 index = main
 ```
 
+#### Dashboard
+There is a monitoring dashboard you can add to your high side search head. See screenshot:
+![Data Diode Monitoring Screenshot](appserver/static/data_diode_monitoring_screenshot.png)
 
 ## Use case 3: Ingest from Splunk JSON Export
 
