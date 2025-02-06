@@ -1,0 +1,668 @@
+{
+    "title": "Data Diode Monitoring",
+    "description": "",
+    "inputs": {
+        "input_global_trp": {
+            "options": {
+                "defaultValue": "-24h@h,now",
+                "token": "global_time"
+            },
+            "title": "Global Time Range",
+            "type": "input.timerange"
+        }
+    },
+    "defaults": {
+        "dataSources": {
+            "ds.search": {
+                "options": {
+                    "queryParameters": {
+                        "earliest": "$global_time.earliest$",
+                        "latest": "$global_time.latest$"
+                    }
+                }
+            }
+        }
+    },
+    "visualizations": {
+        "viz_I8w23lA8": {
+            "options": {
+                "fillColor": "#294e70",
+                "strokeColor": "transparent"
+            },
+            "type": "splunk.rectangle"
+        },
+        "viz_LFQfNADN": {
+            "context": {
+                "strokeColorEditorConfig": [
+                    {
+                        "to": 1,
+                        "value": "#d41f1f"
+                    },
+                    {
+                        "from": 1,
+                        "value": "#118832"
+                    }
+                ]
+            },
+            "dataSources": {},
+            "options": {
+                "strokeColor": "> strokeDataPoint | rangeValue(strokeColorEditorConfig)",
+                "strokeDataPoint": "> strokeDataSeries | lastPoint()",
+                "strokeDataSeries": "> primary | seriesByName('MB')",
+                "strokeWidth": 6,
+                "toArrow": true
+            },
+            "type": "abslayout.line"
+        },
+        "viz_RJ78XSLx": {
+            "options": {
+                "fillColor": "#294e70",
+                "strokeColor": "transparent"
+            },
+            "type": "splunk.rectangle"
+        },
+        "viz_SExyp3mM": {
+            "options": {
+                "strokeDasharray": 1,
+                "strokeWidth": 11
+            },
+            "type": "abslayout.line"
+        },
+        "viz_Tt2ohCS3": {
+            "containerOptions": {},
+            "context": {
+                "backgroundColorEditorConfig": [
+                    {
+                        "to": 10,
+                        "value": "#2f8811"
+                    },
+                    {
+                        "from": 10,
+                        "value": "#60691b"
+                    }
+                ]
+            },
+            "dataSources": {
+                "primary": "ds_fqD10ZIH"
+            },
+            "description": "Files waiting in queue to be indexed",
+            "options": {
+                "backgroundColor": "> trendValue | rangeValue(backgroundColorEditorConfig)"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "In Flight",
+            "type": "splunk.singlevalue"
+        },
+        "viz_cjegsZXe": {
+            "dataSources": {
+                "primary": "ds_c2oWIpYY"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "unit": "s"
+            },
+            "title": "Min latency",
+            "type": "splunk.singlevalue"
+        },
+        "viz_gFCjTikY": {
+            "dataSources": {
+                "primary": "ds_pF0RvmHx_ds_PLkMQ8td_ds_c2oWIpYY"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "unit": "s"
+            },
+            "title": "Max latency",
+            "type": "splunk.singlevalue"
+        },
+        "viz_j0qZPUJ3": {
+            "dataSources": {
+                "primary": "ds_hQC52ZC7"
+            },
+            "options": {
+                "count": 20,
+                "dataOverlayMode": "none",
+                "drilldown": "none",
+                "showInternalFields": false,
+                "showRowNumbers": false
+            },
+            "title": "File Queue",
+            "type": "splunk.table"
+        },
+        "viz_kmrrK8JS": {
+            "containerOptions": {},
+            "dataSources": {
+                "primary": "ds_51LFDooQ"
+            },
+            "description": "Files Transmitted",
+            "options": {
+                "backgroundColor": "#294e70",
+                "unit": ""
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "LOW SIDE",
+            "type": "splunk.singlevalue"
+        },
+        "viz_nE4QBnKH": {
+            "dataSources": {
+                "primary": "ds_fOa8tGaD"
+            },
+            "options": {
+                "stackMode": "stacked",
+                "y": "> primary | frameBySeriesNames('HIGH','LOW')"
+            },
+            "type": "splunk.column"
+        },
+        "viz_qk8ebHuZ": {
+            "containerOptions": {},
+            "dataSources": {
+                "primary": "ds_VSGZ0Xj6_ds_51LFDooQ"
+            },
+            "description": "Files Indexed",
+            "options": {
+                "backgroundColor": "#294e70"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "HIGH SIDE",
+            "type": "splunk.singlevalue"
+        },
+        "viz_qyLQeb4F": {
+            "containerOptions": {},
+            "context": {
+                "convertedColorRange": [
+                    {
+                        "from": 100,
+                        "value": "#dc4e41"
+                    },
+                    {
+                        "from": 70,
+                        "to": 100,
+                        "value": "#f1813f"
+                    },
+                    {
+                        "from": 30,
+                        "to": 70,
+                        "value": "#f8be34"
+                    },
+                    {
+                        "from": 0,
+                        "to": 30,
+                        "value": "#0877a6"
+                    },
+                    {
+                        "to": 0,
+                        "value": "#53a051"
+                    }
+                ]
+            },
+            "dataSources": {
+                "primary": "ds_J3lA0e2A"
+            },
+            "options": {
+                "overlayFields": [
+                    "Events"
+                ],
+                "showIndependentYRanges": true,
+                "showSplitSeries": true,
+                "xAxisTitleText": "",
+                "y": "> primary | frameBySeriesNames('Events')",
+                "y2": "> primary | frameBySeriesNames('MB')"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "Indexing Statistics",
+            "type": "splunk.area"
+        },
+        "viz_r3uMTADG": {
+            "dataSources": {
+                "primary": "ds_PLkMQ8td_ds_c2oWIpYY"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "unit": "s"
+            },
+            "title": "Avg latency",
+            "type": "splunk.singlevalue"
+        },
+        "viz_sBMEnHuO": {
+            "containerOptions": {},
+            "dataSources": {
+                "primary": "ds_VMEq5GUD_ds_vQsCDUW0"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "unit": "MB"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "",
+            "type": "splunk.singlevalue"
+        },
+        "viz_uQwkzGq4": {
+            "options": {
+                "fillColor": "#000000",
+                "strokeColor": "transparent"
+            },
+            "type": "splunk.rectangle"
+        },
+        "viz_uwLJYb0g": {
+            "context": {
+                "backgroundColorEditorConfig": [
+                    {
+                        "match": "RETRANSMISSIONS HAVE OCCURRED",
+                        "value": "#78062a"
+                    },
+                    {
+                        "match": "STABLE DATA FLOW",
+                        "value": "#2f8811"
+                    }
+                ]
+            },
+            "dataSources": {
+                "primary": "ds_25Nha6xe"
+            },
+            "options": {
+                "backgroundColor": "> majorValue | matchValue(backgroundColorEditorConfig)"
+            },
+            "type": "splunk.singlevalue"
+        },
+        "viz_vfbPijHZ": {
+            "options": {
+                "markdown": "\nVolume low/high may differ due to JSON wrapping and compression."
+            },
+            "type": "splunk.markdown"
+        },
+        "viz_zpPAYGiB": {
+            "containerOptions": {},
+            "dataSources": {
+                "primary": "ds_vQsCDUW0"
+            },
+            "description": "",
+            "options": {
+                "backgroundColor": "transparent",
+                "unit": "MB"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "",
+            "type": "splunk.singlevalue"
+        }
+    },
+    "dataSources": {
+        "ds_25Nha6xe": {
+            "name": "banner",
+            "options": {
+                "extend": "ds_8tEbtbJ6",
+                "query": "| eval retransmits=if(dc_file_high > dc_file_low, \"RETRANSMISSIONS HAVE OCCURRED\", \"STABLE DATA FLOW\")\n| table retransmits",
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.chain"
+        },
+        "ds_51LFDooQ": {
+            "name": "base_kpis_single_dc_file_low",
+            "options": {
+                "extend": "ds_8tEbtbJ6",
+                "query": "| fields dc_file_low",
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.chain"
+        },
+        "ds_8tEbtbJ6": {
+            "name": "base_kpis",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\n(index=main sourcetype=journald source=\"journald://SplunkCopyFiles\" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished events ndjson)\n``` Account for late arriving events from low side by using _indextime instead of _time```\n| eval _time=if(sourcetype == \"journald\", _indextime, _time)\n| eval file=trim(file,\"'\")\n| rex field=file \"sourcetype=(?<original_sourcetype>\\S+)/\"\n| eval file=replace(file,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file_to=replace(file_to,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file=if(sourcetype == \"journald\", file_to, file)\n| stats dc(eval(if(sourcetype == \"journald\", file, null()))) AS dc_file_low dc(eval(if(sourcetype == \"splunkd\", file, null()))) AS dc_file_high",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                },
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.search"
+        },
+        "ds_J3lA0e2A": {
+            "name": "Indexing Statistics search",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\nindex=_internal sourcetype=splunkd source=*metrics.log group=per_sourcetype_agg_cpu series=\"rfs_input_with_index\"\n| timechart sum(bytes) AS bytes_sum sum(event_count) AS event_count_sum\n| eval bytes_sum=round(bytes_sum/1024/1024,1)\n| fillnull\n| rename bytes_sum AS MB\n| rename event_count_sum AS Events",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                },
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.search"
+        },
+        "ds_PLkMQ8td_ds_c2oWIpYY": {
+            "name": "avg_latency",
+            "options": {
+                "extend": "ds_hQC52ZC7",
+                "query": "| where dc_st==\"2\"\n| stats avg(range_time)",
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.chain"
+        },
+        "ds_VMEq5GUD_ds_vQsCDUW0": {
+            "name": "high_mb_sum",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\nindex=_internal sourcetype=splunkd source=*metrics.log group=per_sourcetype_agg_cpu series=\"rfs_input_with_index\"\n| stats sum(bytes) AS bytes_sum\n| eval bytes_sum=round(bytes_sum/1024/1024,1)\n| rename bytes_sum AS mb_sum",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                },
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.search"
+        },
+        "ds_VSGZ0Xj6_ds_51LFDooQ": {
+            "name": "base_kpis_single_dc_file_high",
+            "options": {
+                "extend": "ds_8tEbtbJ6",
+                "query": "| fields dc_file_high",
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.chain"
+        },
+        "ds_c2oWIpYY": {
+            "name": "min_latency",
+            "options": {
+                "extend": "ds_hQC52ZC7",
+                "query": "| where dc_st==\"2\"\n| stats min(range_time)",
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.chain"
+        },
+        "ds_fOa8tGaD": {
+            "name": "Search_2",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\n(index=main sourcetype=journald source=\"journald://SplunkCopyFiles\" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished events ndjson)\n``` Account for late arriving events from low side by using _indextime instead of _time```\n| eval _time=if(sourcetype == \"journald\", _indextime, _time)\n| eval file=trim(file,\"'\")\n| rex field=file \"sourcetype=(?<original_sourcetype>\\S+)/\"\n| eval file=replace(file,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file_to=replace(file_to,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file=if(sourcetype == \"journald\", file_to, file)\n| timechart minspan=1m dc(file) BY sourcetype\n| rename journald AS \"LOW\"\n| rename splunkd AS \"HIGH\"\n| table _time LOW HIGH",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                },
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.search"
+        },
+        "ds_fqD10ZIH": {
+            "name": "in_flight",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\n(index=main sourcetype=journald source=\"journald://SplunkCopyFiles\" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished events ndjson)\n``` Account for late arriving events from low side by using _indextime instead of _time```\n| eval _time=if(sourcetype == \"journald\", _indextime, _time)\n| eval file=trim(file,\"'\")\n| rex field=file \"sourcetype=(?<original_sourcetype>\\S+)/\"\n| eval file=replace(file,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file_to=replace(file_to,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file=if(sourcetype == \"journald\", file_to, file)\n| stats values(sourcetype) dc(sourcetype) AS dc_st BY file original_sourcetype _time\n| where dc_st==1\n| timechart dc(file)",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                },
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.search"
+        },
+        "ds_hQC52ZC7": {
+            "name": "File Queue - Table search",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\n(index=main sourcetype=journald source=\"journald://SplunkCopyFiles\" action=copytruncate) OR (index=_internal sourcetype=splunkd TailReader finished events ndjson)\n``` Account for late arriving events from low side by using _indextime instead of _time```\n| eval _time=if(sourcetype == \"journald\", _indextime, _time)\n| eval file=trim(file,\"'\")\n| rex field=file \"sourcetype=(?<original_sourcetype>\\S+)/\"\n| eval file=replace(file,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file_to=replace(file_to,\"^.*year(.*)sourcetype=(\\S+)/events_\",\"year\\1sourcetype=\\2/events_\")\n| eval file=if(sourcetype == \"journald\", file_to, file)\n| stats values(sourcetype) dc(sourcetype) AS dc_st range(_time) AS range_time min(_time) AS _time BY file original_sourcetype",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_jpai5kBv": {
+            "name": "Search_1",
+            "options": {
+                "extend": "ds_J3lA0e2A",
+                "query": "|  fields MB",
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.chain"
+        },
+        "ds_pF0RvmHx_ds_PLkMQ8td_ds_c2oWIpYY": {
+            "name": "max_latency",
+            "options": {
+                "extend": "ds_hQC52ZC7",
+                "query": "| where dc_st==\"2\"\n| stats max(range_time)",
+                "refresh": "15s",
+                "refreshType": "delay"
+            },
+            "type": "ds.chain"
+        },
+        "ds_vQsCDUW0": {
+            "name": "low_mb_sum",
+            "options": {
+                "query": "[ | makeresults \n    | addinfo | eval latest=relative_time(info_max_time,\"-1m\"), earliest=relative_time(info_min_time,\"-1m\")\n    | fields earliest latest ]\n(index=main sourcetype=journald source=\"journald://SplunkCopyFiles\" action=info)\n| stats sum(size) AS bytes_sum\n| eval bytes_sum=round(bytes_sum/1024/1024,1)\n| rename bytes_sum AS mb_sum",
+                "queryParameters": {
+                    "earliest": "$global_time.earliest$",
+                    "latest": "$global_time.latest$"
+                },
+                "refresh": "15s",
+                "refreshType": "interval"
+            },
+            "type": "ds.search"
+        }
+    },
+    "layout": {
+        "globalInputs": [
+            "input_global_trp"
+        ],
+        "layoutDefinitions": {
+            "layout_1": {
+                "options": {
+                    "height": 1240,
+                    "width": 1440
+                },
+                "structure": [
+                    {
+                        "item": "viz_SExyp3mM",
+                        "position": {
+                            "from": {
+                                "x": 494,
+                                "y": 398
+                            },
+                            "to": {
+                                "x": 494,
+                                "y": 70
+                            }
+                        },
+                        "type": "line"
+                    },
+                    {
+                        "item": "viz_LFQfNADN",
+                        "position": {
+                            "from": {
+                                "x": 451,
+                                "y": 193
+                            },
+                            "to": {
+                                "x": 540,
+                                "y": 193
+                            }
+                        },
+                        "type": "line"
+                    },
+                    {
+                        "item": "viz_I8w23lA8",
+                        "position": {
+                            "h": 80,
+                            "w": 450,
+                            "x": 0,
+                            "y": 319
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_RJ78XSLx",
+                        "position": {
+                            "h": 80,
+                            "w": 900,
+                            "x": 540,
+                            "y": 319
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_j0qZPUJ3",
+                        "position": {
+                            "h": 320,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 610
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_kmrrK8JS",
+                        "position": {
+                            "h": 250,
+                            "w": 450,
+                            "x": 0,
+                            "y": 70
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_qk8ebHuZ",
+                        "position": {
+                            "h": 250,
+                            "w": 240,
+                            "x": 780,
+                            "y": 70
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_cjegsZXe",
+                        "position": {
+                            "h": 60,
+                            "w": 110,
+                            "x": 1050,
+                            "y": 330
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_r3uMTADG",
+                        "position": {
+                            "h": 60,
+                            "w": 110,
+                            "x": 1180,
+                            "y": 330
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_gFCjTikY",
+                        "position": {
+                            "h": 60,
+                            "w": 110,
+                            "x": 1310,
+                            "y": 330
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_uwLJYb0g",
+                        "position": {
+                            "h": 50,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_nE4QBnKH",
+                        "position": {
+                            "h": 170,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 400
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_Tt2ohCS3",
+                        "position": {
+                            "h": 250,
+                            "w": 240,
+                            "x": 540,
+                            "y": 70
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_qyLQeb4F",
+                        "position": {
+                            "h": 250,
+                            "w": 420,
+                            "x": 1020,
+                            "y": 70
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_zpPAYGiB",
+                        "position": {
+                            "h": 60,
+                            "w": 240,
+                            "x": 110,
+                            "y": 330
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_sBMEnHuO",
+                        "position": {
+                            "h": 60,
+                            "w": 240,
+                            "x": 770,
+                            "y": 330
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_vfbPijHZ",
+                        "position": {
+                            "h": 60,
+                            "w": 220,
+                            "x": 550,
+                            "y": 340
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_uQwkzGq4",
+                        "position": {
+                            "h": 20,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 50
+                        },
+                        "type": "block"
+                    }
+                ],
+                "type": "absolute"
+            }
+        },
+        "options": {},
+        "tabs": {
+            "items": [
+                {
+                    "label": "Monitoring",
+                    "layoutId": "layout_1"
+                }
+            ]
+        }
+    }
+}
