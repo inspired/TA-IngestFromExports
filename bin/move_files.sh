@@ -9,7 +9,7 @@ STAGING_DIR=/data/staging
 REMOTE_DEST_USER=ec2-user
 REMOTE_DEST_GROUP=splunk
 REMOTE_DEST=172.31.28.197
-REMOTE_DEST_DIR=/data/imports
+REMOTE_DEST_DIR=/data/imports/$(hostname)
 SSH_KEY=/home/splunk/.sshkey
 
 # CODE STARTS HERE. DO NOT MODIFY
