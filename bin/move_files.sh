@@ -43,7 +43,6 @@ do
                         fi
                 else
                         mkdir -p ${dir_to_move_to} && echo ${date} action=create dir="${dir_to_move_to}"
-                        # At this point there is a theoretical chance of data loss. We need to monitor this.
                         cp ${file} ${file_to_staging} && truncate -s 0 ${file} && echo ${date} action=\"copytruncate\" file=\""${file}"\" file_to=\""${file_to_staging}"\"
                 fi
         fi
