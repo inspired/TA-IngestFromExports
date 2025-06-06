@@ -75,7 +75,7 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
             INGEST_EVAL = 'pd:_destinationKey'=if((true()), "rfs:filesystem,_splunk_", 'pd:_destinationKey')
             STOP_PROCESSING_IF = NOT isnull('pd:_destinationKey') AND 'pd:_destinationKey' != "" AND (isnull('pd:_doRouteClone') OR 'pd:_doRouteClone' == "")
             ```
-3. Install this TA on your (target system)
+3. Install this TA on your target HF
 4. Move data from source system to target system using whatever means you choose. The attached [File move script](#move_files) can be used.
 5. Monitor, batch or upload files. Example batch config:
    ```
