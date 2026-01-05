@@ -77,7 +77,7 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
             ```
 3. Install this TA on your target HF or target indexer
 4. Move data from source system to target system using whatever means you choose. The attached [File move script](#move_files) can be used.
-5. Monitor, batch or upload files. Example batch config:
+5. Monitor, batch or upload files on your target HF or target indexer. Example batch config:
    ```
    [batch:///data/imports]
    move_policy = sinkhole
@@ -90,8 +90,23 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
 6. Set sourcetype to ONE of the following:
    1. *rfs_input* (it will be rewritten) and set your desired index
    2. *rfs_input_with_index* (it will be rewritten) if you'd like to retain the original index.
-
   
+7. OPTIONAL: Instead of doing the sourcetype rewriting on a HF, you can do it with Edge Processor for better indexed_fields extraction.
+   1. Configure an input as above on a HF with sourcetype, i.e. *rfs_input_with_index_ep*. Make sure you use *INDEXED_EXTRACTIONS = NONE* for this sourcetype  
+   2. Configure a pipeline that partitions using sourctype *rfs_input_with_index_ep* with this configuration:
+```
+/*
+A valid SPL2 statement for a pipeline must start with "$pipeline", and include "from $source"
+and "into $destination".
+*/
+$pipeline = | from $source
+            | flatten _raw
+            | flatten indexed_fields 
+            | eval _raw=event
+            | eval _time=time
+            | fields - indexed_fields, event, time
+| into $destination;
+```
 #### <a name="move_files"></a> File move script
 A convenience script to move files from one system to another using rsync+ssh is attached. The script also cleans up old files.  
 The script is located in *bin/move_files.sh* and the unit files to execute it every 30 seconds are in the readme folder.
