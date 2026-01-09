@@ -92,8 +92,9 @@ Care has been taken to ensure that the integrity of the data is left intact, inc
    2. *rfs_input_with_index* (it will be rewritten) if you'd like to retain the original index.
   
 7. OPTIONAL: Instead of doing the sourcetype rewriting on a HF, you can do it with Edge Processor for better indexed_fields extraction.
-   1. Configure an input as above on a HF with sourcetype, i.e. *rfs_input_with_index_ep*. Make sure you use *INDEXED_EXTRACTIONS = NONE* for this sourcetype  
-   2. Configure a pipeline that partitions using sourctype *rfs_input_with_index_ep* with this configuration:
+   1. Configure an input as above on a UF/HF with sourcetype *rfs_input_with_index_ep*. Install this TA on the UF/HF
+   2. Configure the UF/HF to forward to EP
+   3. Configure an EP pipeline that partitions using sourctype *rfs_input_with_index_ep* with this configuration:
 ```
 /*
 A valid SPL2 statement for a pipeline must start with "$pipeline", and include "from $source"
