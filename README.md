@@ -214,7 +214,7 @@ Whereas we only want the following fields:
 
 1. Install this TA on your indexer/HF
 2. Create your indexes
-3. Monitor, one-shot or upload your CSV file. Set sourcetype to ONE of the following:
+3. Monitor, one-shot or upload your JSON files. Set sourcetype to ONE of the following:
    1. *index_splunk_json_export* (it will be rewritten) and set your desired index
    2. *index_splunk_json_export_with_index* (it will be rewritten) if you'd like to retain the original index.
 
